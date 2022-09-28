@@ -16,6 +16,11 @@
         tq = final.naersk.buildPackage {
           pname = "tq";
           root = ./.;
+          buildInputs = [ final.makeWrapper ];
+          postInstall = ''
+            wrapProgram "$out/bin/tq" \
+              --prefix PATH : ${final.jq}/bin
+          '';
         };
       };
 
